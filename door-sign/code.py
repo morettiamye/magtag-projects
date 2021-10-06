@@ -1,10 +1,15 @@
-import time
 from adafruit_magtag.magtag import MagTag
+import alarm
+import board
+import digitalio
+import neopixel
+import time
 
 magtag = MagTag()
 graphics = magtag.graphics
 peripherals = magtag.peripherals
 
+magtag.peripherals.neopixel_disable = True
 
 mid_x = magtag.graphics.display.width // 2 - 1
 magtag.add_text(
@@ -27,16 +32,24 @@ magtag.add_text(
 
 magtag.set_text("Hello!", index=1)
 
-while True:
-    if magtag.peripherals.button_a_pressed:
-        magtag.set_text("Please knock", index=1)
-    elif magtag.peripherals.button_b_pressed:
-        magtag.set_text("In a meeting, slack me", index=1)
-    elif magtag.peripherals.button_c_pressed:
-        magtag.set_text("Remote today", index=1)
-    elif magtag.peripherals.button_d_pressed:
-        magtag.set_text("Go bother Amanda", index=1)
+button = (board.BUTTON_A)  # pick any two
+wakeup = [alarm.pin.PinAlarm(pin=button, value=False, pull=True)]
 
-    else:
-        magtag.peripherals.neopixel_disable = True
-    time.sleep(0.01)
+time_span = 0.01;
+total_sleep_time = 15;
+time_elapsed = 0;
+
+while time_elapsed < total_sleep_time:
+    if magtag.peripherals.button_b_pressed:
+        magtag.set_text("Please knock", index=1)
+    elif magtag.peripherals.button_c_pressed:
+        magtag.set_text("In a meeting, slack me", index=1)
+    elif magtag.peripherals.button_d_pressed:
+        magtag.set_text("Remote today", index=1)
+
+    time_elapsed = time_elapsed + time_span
+    time.sleep(time_span)
+
+alarm.exit_and_deep_sleep_until_alarms(wakeup)
+
+
