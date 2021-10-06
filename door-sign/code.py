@@ -1,60 +1,42 @@
-import ipaddress
-import ssl
-import wifi
-import socketpool
-import adafruit_requests
+import time
+from adafruit_magtag.magtag import MagTag
 
-# URLs to fetch from
-TEXT_URL = "http://wifitest.adafruit.com/testwifi/index.html"
-JSON_QUOTES_URL = "https://www.adafruit.com/api/quotes.php"
-JSON_STARS_URL = "https://api.github.com/repos/adafruit/circuitpython"
+magtag = MagTag()
+graphics = magtag.graphics
+peripherals = magtag.peripherals
 
-# Get wifi details and more from a secrets.py file
-try:
-    from secrets import secrets
-except ImportError:
-    print("WiFi secrets are kept in secrets.py, please add them there!")
-    raise
 
-print("ESP32-S2 WebClient Test")
+mid_x = magtag.graphics.display.width // 2 - 1
+magtag.add_text(
+    text_font="opensans-36.bdf",
+    text_position=(mid_x, 20),
+    text_anchor_point=(0.5, 0),
+    is_data=False,)
+magtag.set_text("Amy Moretti")
 
-print("My MAC addr:", [hex(i) for i in wifi.radio.mac_address])
+magtag.add_text(
+    text_font="opensans-18.bdf",
+    text_wrap=30,
+    text_maxlen=160,
+    text_position=(
+        5,
+        (magtag.graphics.display.height // 2) + 20,
+    ),
+    line_spacing=0.75
+)
 
-print("Available WiFi networks:")
-for network in wifi.radio.start_scanning_networks():
-    print("\t%s\t\tRSSI: %d\tChannel: %d" % (str(network.ssid, "utf-8"),
-            network.rssi, network.channel))
-wifi.radio.stop_scanning_networks()
+magtag.set_text("Hello!", index=1)
 
-print("Connecting to %s"%secrets["ssid"])
-wifi.radio.connect(secrets["ssid"], secrets["password"])
-print("Connected to %s!"%secrets["ssid"])
-print("My IP address is", wifi.radio.ipv4_address)
+while True:
+    if magtag.peripherals.button_a_pressed:
+        magtag.set_text("Please knock", index=1)
+    elif magtag.peripherals.button_b_pressed:
+        magtag.set_text("In a meeting, slack me", index=1)
+    elif magtag.peripherals.button_c_pressed:
+        magtag.set_text("Remote today", index=1)
+    elif magtag.peripherals.button_d_pressed:
+        magtag.set_text("Go bother Amanda", index=1)
 
-ipv4 = ipaddress.ip_address("8.8.4.4")
-print("Ping google.com: %f ms" % (wifi.radio.ping(ipv4)*1000))
-
-pool = socketpool.SocketPool(wifi.radio)
-requests = adafruit_requests.Session(pool, ssl.create_default_context())
-
-print("Fetching text from", TEXT_URL)
-response = requests.get(TEXT_URL)
-print("-" * 40)
-print(response.text)
-print("-" * 40)
-
-print("Fetching json from", JSON_QUOTES_URL)
-response = requests.get(JSON_QUOTES_URL)
-print("-" * 40)
-print(response.json())
-print("-" * 40)
-
-print()
-
-print("Fetching and parsing json from", JSON_STARS_URL)
-response = requests.get(JSON_STARS_URL)
-print("-" * 40)
-print("CircuitPython GitHub Stars", response.json()["stargazers_count"])
-print("-" * 40)
-
-print("done")
+    else:
+        magtag.peripherals.neopixel_disable = True
+    time.sleep(0.01)
