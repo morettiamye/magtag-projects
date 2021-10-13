@@ -60,6 +60,7 @@ magtag.add_text(
     text_position=(mid_x, 20),
     text_anchor_point=(0.5, 0),
     is_data=False,)
-magtag.set_text("Amy Moretti")```
+magtag.set_text("Amy Moretti")
+```
 
 This centers the text in the upper half of the board.  At 36 pixel size, the font is large and clear enough to read as a door sign.
