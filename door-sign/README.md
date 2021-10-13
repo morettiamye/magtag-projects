@@ -99,6 +99,8 @@ while time_elapsed < total_sleep_time:
 
 Each of the buttons are given a letter assignment, this is by default with the Magtag.  Accessing whether or not they have been pressed is very easy, you simply need to call `magtag.peripherals.button_a_pressed` for the leftmost button, and so on.  This makes setting the message text extremely easy.  Because we implemented the alarm to wake associated with the D button (rightmost) before beginning the rest of our code, the Magtag is happy to make use of it so you can utlitize this button as well.   After defining your time variables and what you want your buttons to do, simply finalize it with `alarm.exit_and_deep_sleep_until_alarms(pin_alarm)`.  We pass the pin_alarm to the deep sleep so that it knows what to expect to wake it.  Another button press will not wake the board.
 
+-------------------------
+
 ## In Use
 
 With the case assembled and the magnet feet screwed in, the board is now ready to function as a door sign.  I have it attached to the metal doorframe of my office door, right where the signs normally are.  Now, any time I wish to set my current status I simply press the D button to wake the board, press the button associated with the status I want to use.  Easy peasy!
