@@ -21,7 +21,7 @@ The first step is to install Circuit Python onto the board.  Download the .bin o
 
 The next step is to create your Secrets.py file.  While internet connectivity is not a requirement for this project, the file is a requirement for the board to run. Simply create a Secrets.py file with the following information:
 
-`
+```
   #This file is where you keep secret settings, passwords, and tokens!
   #If you put them in the code you risk committing that info or sharing it
 
@@ -31,4 +31,4 @@ The next step is to create your Secrets.py file.  While internet connectivity is
       'password' : ,
       'timezone' : , #Find your timezone name here: http://worldtimeapi.org/timezones
     }
-`
+```
