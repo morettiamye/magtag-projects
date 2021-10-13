@@ -104,11 +104,11 @@ Each of the buttons are given a letter assignment, this is by default with the M
 With the case assembled and the magnet feet screwed in, the board is now ready to function as a door sign.  I have it attached to the metal doorframe of my office door, right where the signs normally are.  Now, any time I wish to set my current status I simply press the D button to wake the board, press the button associated with the status I want to use.  Easy peasy!
 
 The default text
-![Default](images/default.jpg)
+![Default](images/default.jpg | width=200)
 
 Please knock message
-![Please knock](images/knock.jpg)
+![Please knock](images/knock.jpg | width=200)
 
 In a meeting, Slack me! message
-![In a Meeting, Slack Me](images/slack.jpg)
+![In a Meeting, Slack Me](images/slack.jpg | width=200)
 
